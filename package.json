@@ -1,0 +1,11 @@
+{
+  "name": "study-buddy",
+  "version": "1.0.0",
+  "description": "A simple locally-runnable flashcard study app for intro web students",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

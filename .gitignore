@@ -1,0 +1,10 @@
+# Dependencies installed by npm — never commit these
+node_modules/
+
+# macOS leftover files
+.DS_Store
+
+# Editor / IDE folders (optional local junk)
+.vscode/
+.idea/
+

@@ -1,0 +1,166 @@
+/*
+  layout.css
+  ----------
+  Job: page structure — header, nav, main, footer, grids.
+  Mobile-first: base styles are for small screens,
+  then @media adds desktop improvements.
+*/
+
+.site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-md);
+  flex-shrink: 0;
+}
+
+.site-header__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.site-brand {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.site-brand:hover,
+.site-brand:focus {
+  color: var(--color-accent-dark);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+/* Main nav: text + underline when current (not a filled chip) */
+.site-nav a {
+  text-decoration: none;
+  color: var(--color-muted);
+  font-weight: 600;
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.site-nav a:hover,
+.site-nav a:focus {
+  color: var(--color-ink);
+  background: transparent;
+  border-radius: 0;
+}
+
+.site-nav a[aria-current="page"] {
+  color: var(--color-ink);
+  background: transparent;
+  border-radius: 0;
+  border-bottom-color: var(--color-accent);
+}
+
+.site-main {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+  /* Fill leftover height between header and footer */
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* Pages without their own scroll region (e.g. Start a quiz) scroll here */
+  overflow: auto;
+}
+
+.site-footer {
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-md);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+/* Cards page: form on top, table below on mobile */
+.cards-layout {
+  display: grid;
+  gap: var(--space-lg);
+  /* Take all leftover height under the page intro */
+  flex: 1 1 0;
+  min-height: 0;
+  align-items: stretch;
+  overflow: hidden;
+  /* Both panels share the viewport; each scrolls inside */
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* Import/Export (mobile stack only): shrink Add a card, give list more height.
+   Must not apply at ≥768px — higher specificity would override the one-row desktop grid. */
+@media (max-width: 767px) {
+  .cards-layout.is-list-focused {
+    grid-template-rows: auto minmax(12rem, 1fr);
+  }
+}
+
+/* Add/Edit form: stay inside its grid cell, scroll fields if needed */
+.card-form-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.card-form-panel > :not(.card-form):not(.card-form__footer):not(.card-preview) {
+  flex-shrink: 0;
+}
+
+.card-form-panel .card-form,
+.card-form-panel .card-preview {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+  /* Leave room so last fields can scroll clear of the overlay buttons */
+  padding-bottom: 3.5rem;
+}
+
+.card-form-panel .card-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  overflow: hidden;
+}
+
+.study-layout {
+  display: grid;
+  gap: var(--space-md);
+  justify-items: center;
+  overflow: visible;
+}
+
+/* Desktop: more horizontal room for header + two-column cards page */
+@media (min-width: 768px) {
+  .site-header__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cards-layout {
+    /* ~60% Add a card / ~40% Your cards */
+    grid-template-columns: minmax(0, 3fr) minmax(14rem, 2fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+  }
+}

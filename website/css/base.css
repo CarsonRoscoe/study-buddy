@@ -1,0 +1,121 @@
+/*
+  base.css
+  --------
+  Job: shared foundation — colors, fonts, spacing, basic text.
+  Layout (grids/breakpoints) lives in layout.css.
+  Buttons/forms/tables live in components.css.
+*/
+
+:root {
+  /* Brand / UI colors — change these to restyle the whole app */
+  --color-bg: #f3f6f4;
+  --color-surface: #ffffff;
+  --color-ink: #1c2a24;
+  --color-muted: #5a6b63;
+  --color-accent: #0f7a5a;
+  --color-accent-dark: #0b5c44;
+  --color-border: #d5e0db;
+  --color-danger: #b42318;
+  --color-danger-dark: #8f1c13;
+
+  /* Soft page atmosphere (not a flat white void) */
+  --bg-gradient: linear-gradient(160deg, #e8f2ec 0%, #f3f6f4 45%, #eef3f8 100%);
+
+  /* Type */
+  --font-display: "Trebuchet MS", "Segoe UI", sans-serif;
+  --font-body: "Segoe UI", Tahoma, sans-serif;
+
+  /* Spacing scale */
+  --space-xs: 0.35rem;
+  --space-sm: 0.65rem;
+  --space-md: 1rem;
+  --space-lg: 1.75rem;
+  --space-xl: 2.5rem;
+
+  --radius: 6px;
+  /* ~80% of a typical desktop viewport (was 920px / ~60%) */
+  --max-width: min(1280px, 90vw);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  /* Cap to the viewport so inner panels (Your cards, Past quizzes) scroll
+     instead of pushing the footer off-screen. */
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--bg-gradient);
+  line-height: 1.5;
+}
+
+@supports (height: 100dvh) {
+  body {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0;
+  color: var(--color-muted);
+}
+
+a {
+  color: var(--color-accent-dark);
+}
+
+a:hover,
+a:focus {
+  color: var(--color-accent);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Hide text visually but keep it available to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+  Make the HTML hidden attribute always win.
+  Without this, rules like .study-layout { display: grid }
+  can accidentally show elements that should stay hidden
+  (for example the quiz card before you click Start).
+*/
+[hidden] {
+  display: none !important;
+}

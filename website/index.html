@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Buddy — Study</title>
+    <!-- CSS is split by job: base → layout → components -->
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <nav class="site-nav" aria-label="Main">
+          <a href="/index.html" aria-current="page">Study</a>
+          <a href="/quiz.html">Quiz</a>
+          <a href="/cards.html">Cards</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <!-- Home = Study: jump straight into practicing -->
+      <section class="study-setup panel" aria-labelledby="deck-title">
+        <h2 id="deck-title">Your deck</h2>
+
+        <h3 class="tag-filter__heading">Filters</h3>
+        <p id="tag-filter-empty" class="field-hint" hidden>
+          No tags yet. Add tags on the Cards page to filter here.
+        </p>
+        <fieldset id="tag-filter" class="tag-filter">
+          <legend class="visually-hidden">Tag filters</legend>
+          <!-- Checkboxes are filled in by study-page.js -->
+        </fieldset>
+        <p id="deck-count" class="study-meta study-setup__count">Selected 0 cards</p>
+      </section>
+
+      <section class="study-layout" aria-labelledby="study-title">
+        <h2 id="study-title" class="visually-hidden">Flashcard practice</h2>
+
+        <p id="study-meta" class="study-meta">Loading…</p>
+
+        <!--
+          Two stacked cards: top = current, under = next.
+          "Next" animates the top card to the back of the deck.
+        -->
+        <div id="deck" class="deck" hidden>
+          <!-- Stationary deck face during reshuffle (left/right arcs go behind this) -->
+          <div class="deck__slot deck__slot--base" id="deck-base" hidden>
+            <article class="flashcard flashcard--static" aria-hidden="true">
+              <div class="flashcard__face">
+                <p class="flashcard__title" data-field="title"></p>
+                <p class="flashcard__text" data-field="text"></p>
+                <p class="flashcard__subtitle" data-field="subtitle"></p>
+              </div>
+            </article>
+          </div>
+
+          <div class="deck__slot deck__slot--under" id="deck-under">
+            <article class="flashcard flashcard--static" aria-hidden="true">
+              <div class="flashcard__face">
+                <p class="flashcard__title" data-field="title"></p>
+                <p class="flashcard__text" data-field="text"></p>
+                <p class="flashcard__subtitle" data-field="subtitle"></p>
+              </div>
+            </article>
+          </div>
+
+          <div class="deck__slot deck__slot--top" id="deck-top">
+            <article
+              id="flashcard"
+              class="flashcard"
+              role="button"
+              tabindex="0"
+              aria-label="Flashcard. Click or press Enter to flip."
+            >
+              <div class="flashcard__face">
+                <p class="flashcard__title" data-field="title"></p>
+                <p class="flashcard__text" data-field="text"></p>
+                <p class="flashcard__subtitle" data-field="subtitle"></p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="study-actions">
+          <button type="button" id="next-card" class="button button--secondary" hidden>Next</button>
+          <button type="button" id="reshuffle" class="button" hidden>Reshuffle</button>
+        </div>
+
+        <p id="study-message" class="study-message" hidden></p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Manage cards on the <a href="/cards.html">Cards</a> page.</p>
+    </footer>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/shared.js"></script>
+    <script src="/js/study-page.js"></script>
+  </body>
+</html>

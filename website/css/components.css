@@ -1,0 +1,1009 @@
+/*
+  components.css
+  --------------
+  Job: reusable UI pieces — buttons, forms, tables, flashcard.
+  These classes can appear on more than one page.
+*/
+
+.button {
+  display: inline-block;
+  border: 2px solid transparent;
+  /* Squarer corners than tag pills — reads as an action control */
+  border-radius: 4px;
+  padding: 0.7rem 1.35rem;
+  min-height: 2.6rem;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 2px 0 var(--color-accent-dark);
+}
+
+.button:hover,
+.button:focus {
+  background: var(--color-accent-dark);
+  color: #fff;
+  box-shadow: 0 1px 0 #084533;
+}
+
+.button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.button--secondary {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+  box-shadow: 0 2px 0 #c5d0cb;
+}
+
+.button--secondary:hover,
+.button--secondary:focus {
+  background: #f0f4f2;
+  color: var(--color-ink);
+  box-shadow: 0 1px 0 #c5d0cb;
+}
+
+.button--danger {
+  background: var(--color-danger);
+  box-shadow: 0 2px 0 var(--color-danger-dark);
+}
+
+.button--danger:hover,
+.button--danger:focus {
+  background: var(--color-danger-dark);
+  box-shadow: 0 1px 0 #6f1510;
+}
+
+.button--small {
+  padding: 0.35rem 0.7rem;
+  min-height: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+}
+
+.card-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+.label-note {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.card-form input[type="text"],
+.card-form textarea {
+  width: 100%;
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: inherit;
+}
+
+.card-form textarea {
+  /* One visible line by default; students can still resize taller */
+  min-height: 0;
+  height: calc(1.5em + 2 * var(--space-sm) + 2px);
+  resize: vertical;
+}
+
+.field-hint {
+  margin: calc(var(--space-sm) * -1) 0 var(--space-md);
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.card-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.card-preview__hint {
+  margin: 0;
+  text-align: center;
+}
+
+/* Float over scrolling fields — no bar / no clipping strip */
+.card-form__footer {
+  position: absolute;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  pointer-events: none;
+}
+
+.card-form__footer .button {
+  pointer-events: auto;
+}
+
+.form-status {
+  min-height: 1.4em;
+  margin: 0 0 var(--space-sm);
+  font-size: 0.95rem;
+}
+
+/* No reserved gap above Title when there is nothing to announce */
+.form-status:empty {
+  display: none;
+}
+
+.form-status--error {
+  color: var(--color-danger);
+}
+
+.form-status--ok {
+  color: var(--color-accent-dark);
+}
+
+/* Table for listing cards — intentional for curriculum */
+.table-wrap {
+  overflow: auto;
+}
+
+.cards-table {
+  width: 100%;
+  table-layout: fixed;
+  /* separate + spacing 0 keeps sticky headers reliable in more browsers */
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-surface);
+}
+
+/* Title gets most of the narrow list; Actions stay compact */
+.cards-table__col-title {
+  width: 62%;
+}
+
+.cards-table__col-actions {
+  width: 38%;
+}
+
+.cards-table th,
+.cards-table td {
+  border: 1px solid var(--color-border);
+  padding: var(--space-sm);
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Avoid double borders with separate collapse */
+.cards-table th + th,
+.cards-table td + td {
+  border-left: none;
+}
+
+.cards-table tbody tr + tr td {
+  border-top: none;
+}
+
+.cards-table th {
+  /* Stay visible while the table body scrolls inside .table-wrap */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #e7f3ee;
+  font-family: var(--font-display);
+}
+
+.cards-table__title {
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.cards-table__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xs);
+  white-space: nowrap;
+}
+
+.cards-table__actions .button {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cards-table__empty {
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* Your cards: filters stay put; table fills leftover height, then scrolls */
+.cards-list-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+}
+
+.cards-list-panel__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.cards-list-panel__header h2 {
+  margin: 0;
+}
+
+.cards-list-panel__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.cards-list-panel > :not(.table-wrap):not(#list-mode-browse):not(.list-mode-panel) {
+  flex-shrink: 0;
+}
+
+#list-mode-browse:not([hidden]),
+#list-mode-export.list-mode-panel:not([hidden]),
+#list-mode-import.list-mode-panel:not([hidden]) {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#list-mode-browse > :not(.table-wrap),
+#list-mode-export > :not(.table-wrap):not(.cards-list-panel__footer),
+#list-mode-import > :not(.table-wrap):not(.cards-list-panel__footer) {
+  flex-shrink: 0;
+}
+
+/* Table scrolls; Cancel / Done / Download stay pinned at the bottom */
+#list-mode-export .table-wrap,
+#list-mode-import .table-wrap {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.list-mode-panel .field-hint {
+  margin: 0 0 var(--space-md);
+}
+
+.cards-list-panel .tag-filter {
+  margin-bottom: var(--space-sm);
+}
+
+.cards-text-filter {
+  width: 100%;
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: inherit;
+  background: var(--color-surface);
+}
+
+#review-list-panel .tag-filter {
+  margin-bottom: var(--space-sm);
+}
+
+.cards-list-panel .table-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.cards-list-panel__footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-md);
+  flex-shrink: 0;
+}
+
+.cards-table__col-export {
+  width: 5.5rem;
+}
+
+.cards-table--export th:last-child,
+.cards-table--export td:last-child {
+  text-align: center;
+}
+
+.cards-table__export-check {
+  width: 1.15rem;
+  height: 1.15rem;
+  cursor: pointer;
+}
+
+#cards-panel-status:empty {
+  display: none;
+}
+
+#cards-panel-status {
+  margin: 0 0 var(--space-sm);
+}
+
+.tag-filter-hint {
+  margin: 0 0 var(--space-md);
+}
+
+/* Stacked study deck: under = next card, top = current card */
+.deck {
+  position: relative;
+  /* Prefer 28rem; max-width (not min(100%, …)) so grid shrink-to-fit
+     does not collapse to the text’s min-content width. */
+  width: 28rem;
+  max-width: 100%;
+  /* Explicit height so translateY(%) has something to resolve against.
+     (Absolutely positioned slots alone would leave height at 0.) */
+  height: 14rem;
+  overflow: visible;
+}
+
+.deck__slot {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.deck__slot--base {
+  z-index: 1;
+}
+
+.deck__slot--under {
+  z-index: 2;
+}
+
+.deck__slot--top {
+  z-index: 3;
+}
+
+/*
+  Send top card to the back of the deck:
+  0–50%: lift left + up 1:1 (half card size each way) + rotate CCW to -45deg
+  50%:   z-index drops behind the under card
+  50–100%: settle back to place while rotating CW to 0deg
+  translate % is relative to the slot’s own width/height.
+*/
+@keyframes send-to-back {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 4;
+  }
+  45% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 4;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 0;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 0;
+  }
+}
+
+/* Reshuffle cuts: same arcs, drop behind the stationary base card (z-index 1) */
+@keyframes reshuffle-left {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 5;
+  }
+  45% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 5;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 0;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 0;
+  }
+}
+
+@keyframes reshuffle-right {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 5;
+  }
+  45% {
+    transform: translate(50%, -50%) rotate(45deg);
+    z-index: 5;
+  }
+  50% {
+    transform: translate(50%, -50%) rotate(45deg);
+    z-index: 0;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 0;
+  }
+}
+
+.deck__slot--top.is-sending-back {
+  /* Keep under card visible in the middle of the move */
+  animation: send-to-back 0.62s cubic-bezier(0.22, 0.8, 0.25, 1) forwards;
+  pointer-events: none;
+}
+
+/* Reshuffle arcs: faster than send-to-back (0.38s vs 0.62s); no forwards fill */
+.deck__slot.is-reshuffling-left {
+  animation: reshuffle-left 0.38s cubic-bezier(0.22, 0.8, 0.25, 1);
+  pointer-events: none;
+}
+
+.deck__slot.is-reshuffling-right {
+  animation: reshuffle-right 0.38s cubic-bezier(0.22, 0.8, 0.25, 1);
+  pointer-events: none;
+}
+
+/* Idle flyers stay invisible so only the base (center) card reads as the top */
+.deck__slot.is-reshuffle-hidden {
+  visibility: hidden;
+}
+
+/* Stage wraps the deck so the answer flash can center on the cards.
+   Match .deck footprint exactly (same shrink-to-fit-safe sizing). */
+.quiz-deck-stage {
+  position: relative;
+  width: 28rem;
+  max-width: 100%;
+  height: 14rem;
+}
+
+.quiz-deck-stage .deck {
+  width: 100%;
+  height: 100%;
+}
+
+/* Floating correct / incorrect mark — centered on the card area */
+.answer-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.answer-flash__mark {
+  font-size: clamp(4rem, 18vw, 7rem);
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+.answer-flash.is-correct .answer-flash__mark {
+  color: #1a9a5c;
+  text-shadow: 0 4px 24px rgba(26, 154, 92, 0.35);
+}
+
+.answer-flash.is-incorrect .answer-flash__mark {
+  color: var(--color-danger);
+  text-shadow: 0 4px 24px rgba(180, 35, 24, 0.35);
+}
+
+@keyframes answer-flash-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+.answer-flash.is-animating .answer-flash__mark {
+  animation: answer-flash-pop 0.7s ease-out forwards;
+}
+
+/* Study flashcard face — click to flip */
+.flashcard {
+  width: 28rem;
+  max-width: 100%;
+  min-height: 14rem;
+  background: var(--color-surface);
+  border: 2px solid var(--color-accent);
+  border-radius: calc(var(--radius) + 2px);
+  padding: var(--space-lg);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  cursor: pointer;
+  /* Start facing forward (scaleX = 1). Flipped state uses -1.
+     Duration must stay in sync with FLIP_DURATION_MS in study-page.js / quiz-page.js */
+  transform: scaleX(1);
+  transition: transform 0.35s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* Inside the stacked deck, fill the slot */
+.deck .flashcard {
+  width: 100%;
+  height: 100%;
+}
+
+/* Under card is not clickable — only the top card flips */
+.flashcard--static {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* When showing the back, flip the whole card on the X axis */
+.flashcard.is-showing-back {
+  transform: scaleX(-1);
+}
+
+/*
+  Counter-flip the inner face so the text is readable again.
+  Parent scaleX(-1) * child scaleX(-1) = upright text.
+*/
+.flashcard__face {
+  transform: scaleX(1);
+  transition: transform 0.35s ease;
+}
+
+.flashcard.is-showing-back .flashcard__face {
+  transform: scaleX(-1);
+}
+
+.flashcard:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.flashcard__title {
+  margin: 0 0 var(--space-sm);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-accent-dark);
+  font-family: var(--font-display);
+}
+
+.flashcard__text {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+}
+
+.flashcard__subtitle {
+  margin: var(--space-md) 0 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.study-setup {
+  margin-bottom: var(--space-lg);
+}
+
+.study-setup h2 {
+  margin-bottom: var(--space-sm);
+}
+
+.study-setup .tag-filter {
+  margin-bottom: 0;
+  /* Padding (not margin) so it doesn’t collapse into Selected X cards */
+  padding-bottom: var(--space-md);
+}
+
+.study-setup__count {
+  margin: 0;
+  padding-top: 0;
+}
+
+.quiz-selected-cards {
+  margin-top: var(--space-sm);
+}
+
+.quiz-selected-card {
+  cursor: pointer;
+  font: inherit;
+}
+
+.study-setup__actions {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.study-setup__actions .form-status {
+  margin: 0;
+}
+
+.tag-filter__heading {
+  margin: var(--space-md) 0 var(--space-sm);
+  font-size: 1rem;
+}
+
+.tag-filter {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* Tag chips — pills / filters (not buttons, not tabs) */
+.tag-filter__option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  /* Hollow outline pill when idle */
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  user-select: none;
+}
+
+.tag-filter__option input {
+  /* Keep for accessibility / click, but do not show the box */
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Selected tags use ink (not brand green) so they never look like Start */
+.tag-filter__option.is-selected {
+  background: #e8eeeb;
+  border-style: solid;
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* Import preview tags: display-only, not selected filters */
+.tag-filter__option--static {
+  cursor: default;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.tag-filter__option--static:hover,
+.tag-filter__option--static:focus-within {
+  border-color: var(--color-border);
+  color: var(--color-muted);
+}
+
+.cards-table__title--duplicate {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
+
+.cards-table__duplicate-mark {
+  color: var(--color-muted);
+}
+
+.import-duplicates-note:not([hidden]) {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.import-duplicates-note:not([hidden]) + .cards-list-panel__footer {
+  margin-top: var(--space-sm);
+  padding-top: 0;
+}
+
+.tag-filter__option:hover,
+.tag-filter__option:focus-within {
+  border-color: var(--color-muted);
+  color: var(--color-ink);
+}
+
+.tag-filter__option.is-selected:hover,
+.tag-filter__option.is-selected:focus-within {
+  border-color: var(--color-ink);
+  background: #dce6e1;
+}
+
+/* Suggested tags under the Add/Edit form (same pill look as filters) */
+.suggested-tags {
+  margin: 0;
+}
+
+.suggested-tags .tag-filter__heading {
+  margin-top: var(--space-sm);
+}
+
+.suggested-tags .field-hint {
+  margin-bottom: var(--space-sm);
+}
+
+.suggested-tags__chip {
+  /* button reset so chips match filter pills */
+  font: inherit;
+}
+
+.suggested-tags__more {
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0.35rem;
+  margin: 0;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.suggested-tags__more:hover,
+.suggested-tags__more:focus {
+  color: var(--color-accent);
+}
+
+.study-meta {
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.study-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.study-message {
+  margin: 0;
+  text-align: center;
+}
+
+/* Quiz page: Start | Review — underline tabs (not filled buttons) */
+.subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+/* Breathing room under the subtabs before Start / Review content */
+.subtab-panel {
+  padding-top: var(--space-lg);
+}
+
+/* Start panel fills leftover height so the active quiz can center */
+#panel-start {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Active quiz: fill the panel; sit ~40% from the top (not dead center) */
+#quiz-session.study-layout {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-md);
+}
+
+/* Free-space ratio 2:3 above:below ≈ vertical center at 40% */
+#quiz-session.study-layout::before,
+#quiz-session.study-layout::after {
+  content: '';
+  width: 100%;
+  pointer-events: none;
+  flex-shrink: 1;
+}
+
+#quiz-session.study-layout::before {
+  flex: 2 1 0;
+}
+
+#quiz-session.study-layout::after {
+  flex: 3 1 0;
+}
+
+/* Review tab fills leftover viewport under tabs */
+#panel-review {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.subtabs__button {
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.subtabs__button:hover,
+.subtabs__button:focus {
+  color: var(--color-ink);
+  background: transparent;
+}
+
+.subtabs__button.is-active {
+  color: var(--color-ink);
+  background: transparent;
+  border-bottom-color: var(--color-accent);
+}
+
+/* Panels are normal blocks; [hidden] in base.css keeps inactive tabs invisible. */
+
+/* Past quizzes / detail: fill height, scroll list body once maxed */
+#review-list-panel,
+#review-detail {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#review-list-panel > :not(.review-list),
+#review-detail > :not(#review-detail-body) {
+  flex-shrink: 0;
+}
+
+.review-list,
+#review-detail-body {
+  display: grid;
+  margin-top: var(--space-md);
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+  align-content: start;
+}
+
+.review-list {
+  gap: var(--space-md);
+}
+
+#review-detail-body {
+  gap: var(--space-sm);
+}
+
+#review-detail-body .review-item {
+  margin: 0;
+  padding: var(--space-sm);
+}
+
+#review-detail-body .review-item__title {
+  margin-bottom: var(--space-xs);
+}
+
+#review-detail-body h3 {
+  margin: 0 0 var(--space-xs);
+}
+
+.review-row {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: #f8fbf9;
+}
+
+.review-row__date {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.review-row__score,
+.review-row__tags {
+  margin: var(--space-xs) 0 0;
+  color: var(--color-muted);
+}
+
+.review-row__score--perfect {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.review-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.review-item {
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.review-item--wrong {
+  border-color: #f0b4ae;
+  background: #fff6f5;
+}
+
+.review-item__title {
+  margin: 0 0 var(--space-sm);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.review-item p {
+  margin: 0 0 var(--space-xs);
+}
+
+@media (min-width: 768px) {
+  .review-row {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
