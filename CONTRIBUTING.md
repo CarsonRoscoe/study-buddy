@@ -5,7 +5,7 @@ Thanks for helping improve Study Buddy. This project is meant to stay readable f
 ## How to send changes
 
 1. **Fork** [github.com/CarsonRoscoe/study-buddy](https://github.com/CarsonRoscoe/study-buddy) to your own GitHub account.
-2. **Clone your fork** locally:
+2. **Clone your fork** locally (need Git and Node first? See [SETUP.md](SETUP.md)):
    ```bash
    git clone https://github.com/YOUR_USERNAME/study-buddy.git
    cd study-buddy

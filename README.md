@@ -8,10 +8,13 @@ Stack: **vanilla HTML/CSS/JS** in `website/`, a small **Node + Express** API in 
 
 | Doc | Audience |
 | --- | -------- |
+| [SETUP.md](SETUP.md) | First-time install: Git and Node on Mac or Windows, clone, run |
 | [QUICKSTART.md](QUICKSTART.md) | Using the app: classes, cardsets, cards, images, Learn/Test, import/export |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Fork, PR workflow, stack rules, `data/` and Git |
 
 ## Get the code
+
+New machine? Follow [SETUP.md](SETUP.md). Already have Git and Node:
 
 ```bash
 git clone https://github.com/CarsonRoscoe/study-buddy.git
@@ -20,7 +23,7 @@ npm install
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000). For a guided tour of features, see [QUICKSTART.md](QUICKSTART.md).
+Open [http://localhost:3000](http://localhost:3000), then see [QUICKSTART.md](QUICKSTART.md) for features.
 
 Runtime files under `data/` stay on your machine and are not committed (see [data/README.md](data/README.md) and `.gitignore`).
 

@@ -1,6 +1,6 @@
 # Quickstart
 
-Study Buddy runs on your computer. After `npm install` and `npm start`, open [http://localhost:3000](http://localhost:3000).
+Study Buddy runs on your computer. If you have not installed Git and Node yet, start with [SETUP.md](SETUP.md). Then run `npm install` and `npm start` and open [http://localhost:3000](http://localhost:3000).
 
 ## How the app is organized
 
