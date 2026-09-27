@@ -8,3 +8,13 @@ node_modules/
 .vscode/
 .idea/
 
+# Local Study Buddy data (created/edited at runtime — not versioned)
+/data/classes/*
+!/data/classes/README.md
+/data/cardsets/*
+!/data/cardsets/README.md
+/data/images/*
+!/data/images/README.md
+# Legacy folders (may still exist on older machines)
+/data/cards/*
+/data/quizzes/*
