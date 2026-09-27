@@ -1,38 +1,34 @@
 /*
   server.js
   ---------
-  Job: start the Express app (the "front door" of the Node process).
-
-  Beginner mental model:
-  - Express is a library that listens for HTTP requests on a port.
-  - Static files (HTML/CSS/JS) are served from website/.
-  - API routes under /api/cards and /api/quizzes talk to JSON files on disk.
-
-  Keep this file short. File read/write details belong in lib/*-store.js.
-  HTTP method details belong in routes/*.js.
+  Job: Express app — static website/, /api routes, image files from data/images/.
 */
 
 const path = require('path');
 const express = require('express');
-const cardsRouter = require('./routes/cards');
-const quizzesRouter = require('./routes/quizzes');
+const classesRouter = require('./routes/classes');
+const cardsetsRouter = require('./routes/cardsets');
+const imagesRouter = require('./routes/images');
 
 const app = express();
 const PORT = 3000;
 
-// Let Express parse JSON bodies from fetch/POST requests.
-app.use(express.json());
+// Base64 image uploads need a larger JSON body limit than Express default.
+app.use(express.json({ limit: '8mb' }));
 
-// Serve HTML, CSS, JS, and assets from the website folder.
-// Example: /cards.html → website/cards.html
 const websitePath = path.join(__dirname, '..', 'website');
 app.use(express.static(websitePath));
 
-// Card API
-app.use('/api/cards', cardsRouter);
+app.get('/settings.html', function (req, res) {
+  res.redirect(302, '/index.html');
+});
 
-// Quiz history API
-app.use('/api/quizzes', quizzesRouter);
+const imagesPath = path.join(__dirname, '..', 'data', 'images');
+app.use('/data/images', express.static(imagesPath));
+
+app.use('/api/classes', classesRouter);
+app.use('/api/cardsets', cardsetsRouter);
+app.use('/api/images', imagesRouter);
 
 app.listen(PORT, function () {
   console.log('Study Buddy is running!');

@@ -2,21 +2,17 @@
 
 ## What is this folder?
 
-**Route** files decide what happens for each URL + HTTP method
-(GET, POST, PUT, DELETE).
-
-They talk to Express (`req` / `res`) and call the store for disk work.
+Express routers — one file per API area. Each file maps HTTP methods to store functions.
 
 ## What files matter?
 
-| File | Job |
-|------|-----|
-| `cards.js` | All `/api/cards` endpoints |
-| `quizzes.js` | All `/api/quizzes` endpoints |
+| File | Base path |
+| ---- | --------- |
+| `classes.js` | `/api/classes` |
+| `cardsets.js` | `/api/cardsets` |
+| `images.js` | `/api/images` |
 
 ## What should I change (or not)?
 
-- Add new endpoints here when the API grows.
-- Validate input here.
-- Do **not** write `fs.readFile` / `fs.writeFile` here — use `lib/*-store.js`.
-- Do **not** send HTML from these routes — only JSON.
+- Keep routes thin: parse request → call store → send JSON / status.
+- Put filesystem logic in `server/lib/`, not here.

@@ -1,27 +1,15 @@
 # data/
 
-## What is this folder?
+JSON and images the server reads and writes. The browser uses `/api/*`, not these paths directly.
 
-**Saved study artifacts** live here — not code.
-The server reads and writes files under this folder.
+**Git:** Only README files here are tracked. Your `*.json` and image files are local (see root `.gitignore`).
 
-## What files matter?
+| Folder | Contents |
+| ------ | -------- |
+| `classes/` | One JSON file per Class (title, cover URL, sort order) |
+| `cardsets/` | One JSON file per Cardset (title, `classId`, `cards[]`) |
+| `images/` | Files uploaded from the UI |
 
-| Path | Job |
-|------|-----|
-| `cards/` | One JSON file per flashcard |
-| `quizzes/` | One JSON file per finished quiz (history) |
+After `npm start`, create Classes and Cardsets in the app — folders fill in automatically.
 
-## How classmates share cards
-
-1. Person A runs Study Buddy and creates cards.
-2. Person A copies the whole `data/cards/` folder (or zips it).
-3. Person B pastes those files into their own `data/cards/` folder.
-4. Person B restarts (or refreshes) and sees the shared cards.
-
-Quiz history in `data/quizzes/` is usually personal — share it only if you want to.
-
-## What should I change (or not)?
-
-- You may add/remove `.json` files by hand if you are careful.
-- Do **not** put JavaScript, HTML, or CSS in this folder.
+Do not use `/` or `..` in ids; the server rejects unsafe filenames.

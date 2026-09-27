@@ -7,34 +7,62 @@
 */
 
 :root {
-  /* Brand / UI colors — change these to restyle the whole app */
-  --color-bg: #f3f6f4;
-  --color-surface: #ffffff;
-  --color-ink: #1c2a24;
-  --color-muted: #5a6b63;
-  --color-accent: #0f7a5a;
-  --color-accent-dark: #0b5c44;
-  --color-border: #d5e0db;
-  --color-danger: #b42318;
-  --color-danger-dark: #8f1c13;
+  /* Dark gray-blue shell, light copy, sky-blue accents (Quizlet-adjacent) */
+  --color-bg: #121820;
+  --color-bg-elevated: #171f2b;
+  --color-surface: #1c2533;
+  --color-surface-hover: #252f42;
+  --color-surface-raised: #222c3d;
+  --color-ink: #e8eef7;
+  --color-muted: #8fa3bd;
+  --color-accent: #5eb3ff;
+  --color-accent-dark: #3d96e8;
+  --color-accent-glow: rgba(94, 179, 255, 0.35);
+  --color-accent-subtle: rgba(94, 179, 255, 0.12);
+  --color-border: rgba(148, 168, 195, 0.22);
+  --color-border-strong: rgba(148, 168, 195, 0.38);
+  --color-danger: #ff6b6b;
+  --color-danger-dark: #e54848;
+  --color-danger-bg: rgba(255, 107, 107, 0.12);
+  --color-danger-border: rgba(255, 107, 107, 0.45);
+  --color-success: #4ade80;
+  --color-on-accent: #0a1018;
+  --color-table-header: #2a3548;
+  --color-row-selected: rgba(94, 179, 255, 0.1);
+  --color-tag-selected: rgba(94, 179, 255, 0.18);
+  --color-tag-selected-hover: rgba(94, 179, 255, 0.28);
+  --color-placeholder-from: #2a3548;
+  --color-placeholder-to: #1e2838;
+  --color-overlay: rgba(8, 12, 18, 0.72);
 
-  /* Soft page atmosphere (not a flat white void) */
-  --bg-gradient: linear-gradient(160deg, #e8f2ec 0%, #f3f6f4 45%, #eef3f8 100%);
+  --bg-gradient: radial-gradient(
+    120% 90% at 50% -15%,
+    #243049 0%,
+    #171f2b 42%,
+    #121820 100%
+  );
 
-  /* Type */
   --font-display: "Trebuchet MS", "Segoe UI", sans-serif;
   --font-body: "Segoe UI", Tahoma, sans-serif;
 
-  /* Spacing scale */
   --space-xs: 0.35rem;
   --space-sm: 0.65rem;
   --space-md: 1rem;
   --space-lg: 1.75rem;
   --space-xl: 2.5rem;
 
-  --radius: 6px;
-  /* ~80% of a typical desktop viewport (was 920px / ~60%) */
+  --radius: 10px;
+  --radius-lg: 14px;
   --max-width: min(1280px, 90vw);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.38);
+  --shadow-glow: 0 0 0 1px rgba(94, 179, 255, 0.18),
+    0 14px 36px rgba(0, 0, 0, 0.45);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 0.16s;
+  --duration-normal: 0.28s;
 }
 
 *,
@@ -50,8 +78,6 @@ html {
 
 body {
   margin: 0;
-  /* Cap to the viewport so inner panels (Your cards, Past quizzes) scroll
-     instead of pushing the footer off-screen. */
   height: 100%;
   max-height: 100%;
   overflow: hidden;
@@ -60,7 +86,9 @@ body {
   font-family: var(--font-body);
   color: var(--color-ink);
   background: var(--bg-gradient);
+  background-color: var(--color-bg);
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 @supports (height: 100dvh) {
@@ -76,6 +104,7 @@ h3 {
   font-family: var(--font-display);
   line-height: 1.2;
   margin-top: 0;
+  color: var(--color-ink);
 }
 
 p {
@@ -84,12 +113,13 @@ p {
 }
 
 a {
-  color: var(--color-accent-dark);
+  color: var(--color-accent);
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
 a:hover,
 a:focus {
-  color: var(--color-accent);
+  color: #8ecaff;
 }
 
 img {
@@ -97,7 +127,11 @@ img {
   height: auto;
 }
 
-/* Hide text visually but keep it available to screen readers */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -110,12 +144,25 @@ img {
   border: 0;
 }
 
-/*
-  Make the HTML hidden attribute always win.
-  Without this, rules like .study-layout { display: grid }
-  can accidentally show elements that should stay hidden
-  (for example the quiz card before you click Start).
-*/
 [hidden] {
   display: none !important;
+}
+
+.page-scroll {
+  scrollbar-color: var(--color-surface-hover) transparent;
+  scrollbar-width: thin;
+}
+
+.page-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.page-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-surface-hover);
+  border-radius: 999px;
+}
+
+.page-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
 }

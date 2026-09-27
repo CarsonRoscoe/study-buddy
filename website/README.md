@@ -1,24 +1,29 @@
 # website/
 
-## What is this folder?
+Browser-facing HTML, CSS, and JavaScript.
 
-This is the **front end** — the pages people see in the browser.
-It is plain HTML, CSS, and JavaScript (no React, no build step).
+## Main pages
 
-## What files matter?
+| File | Role |
+| ---- | ---- |
+| `index.html` | Home — Class tiles, + menu, import/export class |
+| `class.html` | Cardsets in one Class |
+| `cardset.html` | Learn, Test, and Edit tabs for one Cardset |
+| `learn.html`, `test.html`, `cardset-edit.html` | Redirect stubs → `cardset.html?tab=…` |
 
-| File | Job |
-|------|-----|
-| `index.html` | **Study** (home) — flip through cards |
-| `quiz.html` | **Quiz** — timed session + history |
-| `cards.html` | Manage flashcards (create / edit / delete) |
-| `study.html` | Redirects to `index.html` (old link) |
-| `css/` | Looks and layout |
-| `js/` | Page behavior and talking to the server |
-| `assets/` | Images or icons (optional) |
+## Scripts (typical load order)
 
-## What should I change (or not)?
+1. `js/api.js` — `window.StudyBuddyApi`
+2. `js/shared.js` — chrome, settings, create dialogs, shared helpers
+3. Page script — e.g. `home-page.js`, `cardset-page.js`
+4. On `cardset.html` only: `study-learn.js`, `study-test.js`, `cardset-edit.js`
 
-- **Do** edit the HTML/CSS/JS here to change what students see.
-- **Do not** put saved flashcard data here — that lives in `data/cards/`.
-- **Do not** write files from the browser. The browser asks the **server**; the server saves files.
+## CSS
+
+| File | Role |
+| ---- | ---- |
+| `css/base.css` | Colors, tokens, typography |
+| `css/layout.css` | Header, main, scroll areas, grids |
+| `css/components.css` | Buttons, tiles, flashcards, tables, dialogs |
+
+Keep `fetch` in `api.js`. Page scripts should call the API through that module.

@@ -1,145 +1,89 @@
 /*
   layout.css
   ----------
-  Job: page structure — header, nav, main, footer, grids.
+  Job: page structure — header, main, grids.
   Mobile-first: base styles are for small screens,
   then @media adds desktop improvements.
 */
 
 .site-header {
-  background: var(--color-surface);
+  background: rgba(22, 30, 42, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-md);
+  padding: 0 var(--space-md);
   flex-shrink: 0;
+  /* Exact bar height on every page — brand + icon buttons share one row. */
+  height: calc(2 * var(--space-md) + 2.6rem);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.22);
 }
 
 .site-header__inner {
   max-width: var(--max-width);
+  width: 100%;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--space-sm);
+  height: 2.6rem;
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  position: relative;
+  height: 2.6rem;
+  /* Two icon buttons — avoids width jump when a page omits +. */
+  min-width: calc(2 * 2.6rem + var(--space-sm));
 }
 
 .site-brand {
+  display: inline-flex;
+  align-items: center;
+  height: 2.6rem;
   font-family: var(--font-display);
   font-size: 1.65rem;
   font-weight: 700;
+  line-height: 1;
   color: var(--color-ink);
   text-decoration: none;
 }
 
 .site-brand:hover,
 .site-brand:focus {
-  color: var(--color-accent-dark);
-}
-
-.site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 1rem;
-}
-
-/* Main nav: text + underline when current (not a filled chip) */
-.site-nav a {
-  text-decoration: none;
-  color: var(--color-muted);
-  font-weight: 600;
-  padding: 0.35rem 0;
-  border-bottom: 2px solid transparent;
-}
-
-.site-nav a:hover,
-.site-nav a:focus {
-  color: var(--color-ink);
-  background: transparent;
-  border-radius: 0;
-}
-
-.site-nav a[aria-current="page"] {
-  color: var(--color-ink);
-  background: transparent;
-  border-radius: 0;
-  border-bottom-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 .site-main {
   max-width: var(--max-width);
   width: 100%;
   margin: 0 auto;
-  padding: var(--space-lg) var(--space-md);
-  /* Fill leftover height between header and footer */
+  padding: var(--space-lg) var(--space-md) 0;
+  /* Fill viewport below the header */
   flex: 1 1 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  /* Pages without their own scroll region (e.g. Start a quiz) scroll here */
-  overflow: auto;
+  /* Header + toolbar stay put; .page-scroll owns vertical scroll */
+  overflow: hidden;
 }
 
-.site-footer {
-  max-width: var(--max-width);
-  width: 100%;
-  margin: 0 auto;
-  padding: var(--space-md);
-  color: var(--color-muted);
-  font-size: 0.9rem;
-  border-top: 1px solid var(--color-border);
-  flex-shrink: 0;
-}
-
-/* Cards page: form on top, table below on mobile */
-.cards-layout {
-  display: grid;
-  gap: var(--space-lg);
-  /* Take all leftover height under the page intro */
+/* Scrollable content under the pinned breadcrumb / action row */
+.page-scroll {
   flex: 1 1 0;
   min-height: 0;
-  align-items: stretch;
-  overflow: hidden;
-  /* Both panels share the viewport; each scrolls inside */
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-}
-
-/* Import/Export (mobile stack only): shrink Add a card, give list more height.
-   Must not apply at ≥768px — higher specificity would override the one-row desktop grid. */
-@media (max-width: 767px) {
-  .cards-layout.is-list-focused {
-    grid-template-rows: auto minmax(12rem, 1fr);
-  }
-}
-
-/* Add/Edit form: stay inside its grid cell, scroll fields if needed */
-.card-form-panel {
+  overflow: auto;
+  padding-bottom: var(--space-xl);
+  display: flex;
+  flex-direction: column;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  height: 100%;
-  max-height: 100%;
-  overflow: hidden;
-}
-
-.card-form-panel > :not(.card-form):not(.card-form__footer):not(.card-preview) {
-  flex-shrink: 0;
-}
-
-.card-form-panel .card-form,
-.card-form-panel .card-preview {
-  flex: 1 1 0;
-  min-height: 0;
-  overflow: auto;
-  /* Leave room so last fields can scroll clear of the overlay buttons */
-  padding-bottom: 3.5rem;
-}
-
-.card-form-panel .card-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  overflow: hidden;
 }
 
 .study-layout {
@@ -149,18 +93,112 @@
   overflow: visible;
 }
 
-/* Desktop: more horizontal room for header + two-column cards page */
-@media (min-width: 768px) {
-  .site-header__inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+/* Breadcrumb row — pinned under the site header on every page */
+.page-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+  box-sizing: border-box;
+  min-height: 2.6rem;
+  height: 2.6rem;
+  margin: 0 0 var(--space-md);
+  /* Keep menus readable above scrolling tiles */
+  position: relative;
+  z-index: 30;
+}
 
-  .cards-layout {
-    /* ~60% Add a card / ~40% Your cards */
-    grid-template-columns: minmax(0, 3fr) minmax(14rem, 2fr);
-    grid-template-rows: minmax(0, 1fr);
-    align-items: stretch;
-  }
+.page-toolbar .breadcrumb {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  min-height: 0;
+  line-height: 1.25;
+}
+
+.page-toolbar__actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.page-toolbar__menu {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 2.6rem;
+}
+
+.tile-empty-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  /* Fill the scroll viewport so message + button sit in the visual center */
+  position: absolute;
+  inset: 0;
+  width: auto;
+  text-align: center;
+  box-sizing: border-box;
+  padding: var(--space-md);
+  pointer-events: none;
+}
+
+.tile-empty-block > * {
+  pointer-events: auto;
+}
+
+.tile-empty-block[hidden] {
+  display: none !important;
+}
+
+.tile-empty-block .tile-empty {
+  margin: 0;
+}
+
+.breadcrumb {
+  margin: 0;
+  min-height: 0;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  color: var(--color-muted);
+}
+
+.breadcrumb__sep {
+  margin: 0 0.15rem;
+  color: var(--color-border);
+}
+
+.breadcrumb [aria-current="page"],
+.breadcrumb__current {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.breadcrumb__current--editable {
+  cursor: text;
+  border-radius: 3px;
+  padding: 0.1rem 0.25rem;
+  margin: -0.1rem -0.25rem;
+}
+
+.breadcrumb__current--editable:hover {
+  background: var(--color-accent-subtle);
+}
+
+.breadcrumb__edit {
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-ink);
+  border: 1px solid var(--color-accent);
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+  margin: -0.1rem 0;
+  min-width: 8rem;
+  max-width: min(20rem, 50vw);
+  background: var(--color-surface);
 }

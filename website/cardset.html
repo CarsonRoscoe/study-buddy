@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Buddy — Cardset</title>
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-brand" href="/index.html">Study Buddy</a>
+        <div class="site-header__actions">
+          <div class="add-menu">
+            <button
+              type="button"
+              id="add-menu-button"
+              class="button button--icon"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="add-menu"
+              aria-label="Create"
+              title="Create"
+            >
+              +
+            </button>
+            <div id="add-menu" class="add-menu__panel" hidden role="menu">
+              <button type="button" class="add-menu__item" data-action="new-class" role="menuitem">
+                New Class
+              </button>
+              <button type="button" class="add-menu__item" data-action="new-cardset" role="menuitem">
+                New Cardset
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="open-settings"
+            class="button button--icon button--secondary"
+            title="Settings"
+            aria-label="Settings"
+          >
+            ⚙
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="page-toolbar">
+        <nav class="breadcrumb" id="set-breadcrumb" aria-label="Breadcrumb"></nav>
+
+        <div class="session-menu page-toolbar__menu">
+          <button
+            type="button"
+            id="set-menu-button"
+            class="button button--icon button--secondary"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="set-menu"
+            aria-label="More actions"
+            title="More actions"
+          >
+            ⋯
+          </button>
+          <div id="set-menu" class="add-menu__panel set-menu" hidden role="menu">
+            <button type="button" class="add-menu__item" data-menu="import" role="menuitem">
+              Import cards
+            </button>
+            <button type="button" class="add-menu__item" data-menu="export" role="menuitem">
+              Export cardset
+            </button>
+          </div>
+          <input type="file" id="import-set" accept="application/json,.json" hidden />
+        </div>
+      </div>
+
+      <div class="page-scroll page-scroll--study">
+        <div id="set-study-wrap" class="cardset-study" hidden>
+          <div class="subtabs" role="tablist" aria-label="Study mode">
+            <button
+              type="button"
+              id="tab-learn"
+              class="subtabs__button is-active"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-learn"
+            >
+              Learn
+            </button>
+            <button
+              type="button"
+              id="tab-test"
+              class="subtabs__button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-test"
+            >
+              Test
+            </button>
+            <button
+              type="button"
+              id="tab-edit"
+              class="subtabs__button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-edit"
+            >
+              Edit
+            </button>
+          </div>
+
+          <section
+            id="panel-learn"
+            class="subtab-panel study-layout cardset-study__panel"
+            role="tabpanel"
+            aria-labelledby="tab-learn"
+          >
+            <p id="learn-meta" class="study-meta">Loading…</p>
+
+            <div id="active-learn">
+              <div class="quiz-deck-stage">
+                <div id="learn-deck" class="deck" hidden>
+                  <div class="deck__slot deck__slot--base" id="learn-deck-base" hidden>
+                    <article class="flashcard flashcard--static" aria-hidden="true">
+                      <div class="flashcard__face">
+                        <p class="flashcard__text" data-field="text"></p>
+                        <img class="flashcard__image" data-field="image" alt="" hidden />
+                      </div>
+                    </article>
+                  </div>
+                  <div class="deck__slot deck__slot--under" id="learn-deck-under">
+                    <article class="flashcard flashcard--static" aria-hidden="true">
+                      <div class="flashcard__face">
+                        <p class="flashcard__text" data-field="text"></p>
+                        <img class="flashcard__image" data-field="image" alt="" hidden />
+                      </div>
+                    </article>
+                  </div>
+                  <div class="deck__slot deck__slot--top" id="learn-deck-top">
+                    <article
+                      id="learn-flashcard"
+                      class="flashcard"
+                      role="button"
+                      tabindex="0"
+                      aria-label="Flashcard. Click or press Enter to flip."
+                    >
+                      <div class="flashcard__face">
+                        <p class="flashcard__text" data-field="text"></p>
+                        <img class="flashcard__image" data-field="image" alt="" hidden />
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <div id="learn-answer-flash" class="answer-flash" hidden aria-hidden="true">
+                  <span class="answer-flash__mark"></span>
+                </div>
+              </div>
+
+              <div class="study-nav" aria-label="Browse cards">
+                <button
+                  type="button"
+                  id="learn-prev"
+                  class="button button--icon button--secondary study-nav__btn"
+                  aria-label="Previous card"
+                  title="Previous"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  id="learn-next"
+                  class="button button--icon button--secondary study-nav__btn"
+                  aria-label="Next card"
+                  title="Next"
+                >
+                  <span class="study-nav__glyph study-nav__glyph--next" aria-hidden="true">→</span>
+                  <span class="study-nav__glyph study-nav__glyph--reshuffle" hidden aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="16 3 21 3 21 8" />
+                      <line x1="4" y1="20" x2="21" y2="3" />
+                      <polyline points="21 16 21 21 16 21" />
+                      <line x1="15" y1="15" x2="21" y2="21" />
+                      <line x1="4" y1="4" x2="9" y2="9" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <p id="learn-message" class="study-message" hidden></p>
+          </section>
+
+          <section
+            id="panel-test"
+            class="subtab-panel study-layout cardset-study__panel"
+            role="tabpanel"
+            aria-labelledby="tab-test"
+            hidden
+          >
+            <p id="test-meta" class="study-meta">Loading…</p>
+
+            <div id="active-test">
+              <div class="quiz-deck-stage">
+                <div id="test-deck" class="deck" hidden>
+                  <div class="deck__slot deck__slot--under" id="test-deck-under">
+                    <article class="flashcard flashcard--static" aria-hidden="true">
+                      <div class="flashcard__face">
+                        <p class="flashcard__text" data-field="text"></p>
+                        <img class="flashcard__image" data-field="image" alt="" hidden />
+                      </div>
+                    </article>
+                  </div>
+                  <div class="deck__slot deck__slot--top" id="test-deck-top">
+                    <article
+                      id="test-flashcard"
+                      class="flashcard"
+                      role="button"
+                      tabindex="0"
+                      aria-label="Flashcard. Click or press Enter to flip."
+                    >
+                      <div class="flashcard__face">
+                        <p class="flashcard__text" data-field="text"></p>
+                        <img class="flashcard__image" data-field="image" alt="" hidden />
+                      </div>
+                    </article>
+                  </div>
+                </div>
+                <div id="test-answer-flash" class="answer-flash" hidden aria-hidden="true">
+                  <span class="answer-flash__mark"></span>
+                </div>
+              </div>
+
+              <div class="study-actions">
+                <button type="button" id="test-mark-incorrect" class="button button--danger" hidden>
+                  Incorrect
+                </button>
+                <button type="button" id="test-mark-correct" class="button" hidden>Correct</button>
+              </div>
+            </div>
+
+            <section id="test-summary" class="panel test-summary" hidden>
+              <h2>Score</h2>
+              <p id="test-summary-score" class="test-summary__score"></p>
+              <p id="test-summary-detail" class="field-hint"></p>
+              <div class="study-actions">
+                <button type="button" id="test-retry-missed" class="button" hidden>
+                  Retry missed
+                </button>
+                <button type="button" id="test-retry-all" class="button button--secondary">
+                  Test all
+                </button>
+              </div>
+            </section>
+
+            <p id="test-message" class="study-message" hidden></p>
+          </section>
+
+          <section
+            id="panel-edit"
+            class="subtab-panel cardset-study__panel cardset-study__panel--edit"
+            role="tabpanel"
+            aria-labelledby="tab-edit"
+            hidden
+          >
+            <div id="edit-layout" class="cardset-edit-layout">
+              <div class="cardset-edit-list">
+                <div class="table-wrap cardset-edit-table-wrap">
+                  <table class="cards-table cardset-edit-table">
+                    <thead>
+                      <tr>
+                        <th class="cardset-edit-table__col-term">Term</th>
+                        <th class="cardset-edit-table__col-definition">Definition</th>
+                        <th class="cardset-edit-table__col-image">Term image</th>
+                        <th class="cardset-edit-table__col-delete">
+                          <span class="visually-hidden">Delete</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="edit-cards-body"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <aside class="cardset-edit-preview" aria-label="Card preview">
+                <div class="cardset-edit-preview__content">
+                  <h2 class="cardset-edit-preview__title">Preview</h2>
+                  <p id="edit-preview-hint" class="field-hint">Select a row.</p>
+                  <article
+                    id="edit-preview-card"
+                    class="flashcard cardset-edit-preview__card"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Preview card. Click to flip."
+                    hidden
+                  >
+                    <div class="flashcard__face">
+                      <p class="flashcard__text" data-field="text"></p>
+                      <img class="flashcard__image" data-field="image" alt="" hidden />
+                    </div>
+                  </article>
+                </div>
+                <button
+                  type="button"
+                  id="edit-add-card"
+                  class="cardset-edit-add"
+                  aria-label="Add card"
+                  title="Add card"
+                >
+                  +
+                </button>
+              </aside>
+            </div>
+            <p id="edit-status" class="form-status" role="status" aria-live="polite"></p>
+          </section>
+        </div>
+
+        <div id="set-empty" class="tile-empty-block" hidden>
+          <p class="tile-empty">No cards.</p>
+          <button type="button" id="set-empty-edit" class="button">Edit</button>
+        </div>
+
+        <p id="set-status" class="form-status" role="status"></p>
+      </div>
+    </main>
+
+    <input type="file" id="edit-image-file" accept="image/*" hidden />
+
+    <script src="/js/api.js"></script>
+    <script src="/js/shared.js"></script>
+    <script src="/js/study-learn.js"></script>
+    <script src="/js/study-test.js"></script>
+    <script src="/js/cardset-edit.js"></script>
+    <script src="/js/cardset-page.js"></script>
+  </body>
+</html>

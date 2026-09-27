@@ -1,19 +1,13 @@
 # server/lib/
 
-## What is this folder?
-
-**Library** helpers — reusable code that is not tied to HTTP.
-Right now that means “how we save flashcards and quizzes as JSON files”.
-
-## What files matter?
+Filesystem helpers used by `server/routes/`. Not imported by the browser.
 
 | File | Job |
-|------|-----|
-| `card-store.js` | `listCards`, `getCard`, `createCard`, `updateCard`, `deleteCard` |
-| `quiz-store.js` | `listQuizzes`, `getQuiz`, `createQuiz`, `deleteQuiz` |
+| ---- | --- |
+| `id.js` | `makeId('cardset')`, `assertSafeId` |
+| `class-store.js` | CRUD for `data/classes/` |
+| `cardset-store.js` | CRUD + move Cardset into a Class |
+| `image-store.js` | Write `data/images/` from data URLs |
+| `card-normalize.js` | Normalize card fields on read/write |
 
-## What should I change (or not)?
-
-- Change how files are named or stored here.
-- Keep functions plain: take data in, return data out (or throw errors).
-- Do **not** use Express `req` / `res` in this folder — that belongs in `routes/`.
+Validate ids before building file paths. Set `updatedAt` on writes.

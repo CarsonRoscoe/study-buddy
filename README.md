@@ -1,133 +1,115 @@
 # Study Buddy
 
-A simple **locally runnable** flashcard app for intro web / digital design students.
+A **locally runnable** flashcard app for intro web / digital design students — inspired by Quizlet’s Classes + sets.
 
-You will use:
+Stack: **vanilla HTML/CSS/JS** in `website/`, a small **Node + Express** API in `server/`, and **JSON files** under `data/`.
 
-- **HTML + CSS + vanilla JavaScript** in `website/`
-- A small **Node + Express** server in `server/`
-- **JSON files** in `data/cards/` for saving cards (easy to share)
-
-## How to run
-
-1. Install [Node.js](https://nodejs.org/) (LTS is fine).
-2. Open a terminal in this project folder.
-3. Install dependencies:
+## Get the code
 
 ```bash
+git clone https://github.com/CarsonRoscoe/study-buddy.git
+cd study-buddy
 npm install
-```
-
-4. Start the server:
-
-```bash
 npm start
 ```
 
-5. Open a browser to: [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000).
 
-You should see the Study screen right away (home = studying). One command starts both the website and the API.
+On first run, `data/classes/` and `data/cardsets/` are empty until you create content in the app. Runtime JSON and images are **not** committed to Git (see `.gitignore`).
 
 ## Project map
 
 ```text
 study-buddy/
-├── website/          ← what you see (HTML, CSS, JS)
-│   ├── index.html    ← Study (home / primary use)
-│   ├── quiz.html     ← Quiz sessions + history
-│   ├── cards.html    ← create / edit / delete
-│   ├── study.html    ← redirects to index.html
-│   ├── css/          ← base, layout, components
-│   └── js/           ← api.js + shared.js + page scripts
-├── server/           ← Express API + file saving
-│   ├── server.js     ← starts the app
-│   ├── routes/       ← HTTP for /api/cards and /api/quizzes
-│   └── lib/          ← reads/writes JSON files
+├── website/           ← HTML, CSS, JS (what the browser loads)
+│   ├── index.html     ← Home (Classes)
+│   ├── class.html     ← one Class and its Cardsets
+│   ├── cardset.html   ← Learn | Test | Edit tabs
+│   ├── css/           ← base, layout, components
+│   └── js/            ← api.js, shared.js, *-page.js
+├── server/            ← Express + file storage
 └── data/
-    ├── cards/        ← saved flashcards (share this folder)
-    └── quizzes/      ← quiz history
+    ├── classes/       ← one JSON file per Class
+    ├── cardsets/      ← one JSON file per Cardset (includes cards[])
+    └── images/        ← uploaded covers and term images
 ```
 
-## Architecture (mental model)
+**Redirect stubs** (old bookmarks only): `learn.html`, `test.html`, and `cardset-edit.html` send you to the matching tab on `cardset.html`.
+
+## Architecture
 
 ```text
 Browser  →  website (HTML/CSS/JS)
-                │
-                │  fetch('/api/cards')
+                │  fetch('/api/…')
                 ▼
            server (Express)
-                │
-                │  card-store.js
+                │  *-store.js
                 ▼
-           data/cards/*.json
+           data/classes/*.json
+           data/cardsets/*.json
 ```
 
-**Separation of concerns:**
-
-| Piece                      | Responsibility               |
-| -------------------------- | ---------------------------- |
-| HTML pages                 | Structure only               |
-| `website/css/`             | Look and layout              |
-| `website/js/api.js`        | Talk to the server (`fetch`) |
-| `website/js/shared.js`     | Shared helpers (shuffle, tags, …) |
-| `website/js/*-page.js`     | Update the page (DOM)        |
-| `server/routes/`           | Handle HTTP requests         |
-| `server/lib/card-store.js` | Read/write card files        |
-| `data/cards/`              | The saved data               |
+| Piece | Responsibility |
+| ----- | -------------- |
+| HTML | Structure |
+| `website/css/` | Look and layout |
+| `website/js/api.js` | `fetch` wrappers for the API |
+| `website/js/shared.js` | Shared UI helpers (settings, dialogs, shuffle) |
+| `website/js/*-page.js` | One script per page’s DOM logic |
+| `server/routes/` | HTTP handlers |
+| `server/lib/*-store.js` | Read/write JSON on disk |
 
 ## Pages
 
-| URL                  | Page                          |
-| -------------------- | ----------------------------- |
-| `/` or `/index.html` | **Study** (primary)           |
-| `/quiz.html`         | Quiz (start + review history) |
-| `/cards.html`        | Manage cards                  |
-| `/study.html`        | Redirects to Study            |
+| URL | What you get |
+| --- | ------------ |
+| `/` or `/index.html` | **Home** — Class tiles |
+| `/class.html?id=…` | Cardsets in a Class |
+| `/cardset.html?id=…` | **Learn**, **Test**, **Edit** tabs |
+| `/learn.html?id=…` | Redirect → Learn tab |
+| `/test.html?id=…` | Redirect → Test tab |
+| `/cardset-edit.html?id=…` | Redirect → Edit tab |
 
-## Sharing cards with classmates
+**Settings** (term vs definition as the prompt side): gear icon in the header → modal on any page.
 
-1. Create cards in the app (or copy existing JSON files).
-2. Zip or copy the whole `data/cards/` folder.
-3. Give it to a classmate.
-4. They paste those files into **their** `data/cards/` folder.
-5. They refresh the site (or restart `npm start`) and see the shared cards.
+## How studying works
 
-## Card shape
+1. **+** menu → **New Class**, then **New Cardset** (pick a Class).
+2. Open a Cardset → **Edit** tab to add rows (term, definition, optional image).
+3. **Learn** — browse and flip cards; **Test** — mark Correct/Incorrect and see a score.
+
+Import/export: **⋯** menu on Home (class), Class (cardset), or Cardset (merge import / export set).
+
+## Cardset JSON shape
 
 ```json
 {
-  "id": "card-1726612345678",
-  "frontTitle": "HTML basics",
-  "front": "What does HTML stand for?",
-  "back": "HyperText Markup Language",
-  "backSubtitle": "Web pages are built from HTML",
+  "id": "cardset-1726612345678",
+  "title": "HTML basics",
+  "classId": "class-1726612345678",
+  "cards": [
+    {
+      "id": "card-1",
+      "term": "HTML",
+      "definition": "HyperText Markup Language",
+      "termImageUrl": ""
+    }
+  ],
   "createdAt": "2026-09-17T00:00:00.000Z",
-  "updatedAt": "2026-09-17T00:00:00.000Z",
-  "tags": ["html", "basics"]
+  "updatedAt": "2026-09-17T00:00:00.000Z"
 }
 ```
 
-Tag filters on Study and Quiz use **AND** logic: a card must include every selected tag.
-Quiz also saves each finished session under `data/quizzes/`.
+## API (optional reading)
 
-## API (for curious students)
+| Method | URL | Purpose |
+| ------ | --- | ------- |
+| GET/POST | `/api/classes` | List / create Classes |
+| PUT/DELETE | `/api/classes/:id` | Update / delete Class (+ its Cardsets) |
+| GET/POST | `/api/cardsets` | List / create Cardsets |
+| PUT/PATCH/DELETE | `/api/cardsets/:id` | Update, move, or delete |
+| POST | `/api/images` | Upload image `{ dataUrl }` → `{ url }` |
 
-| Method | URL                | What it does                                                                            |
-| ------ | ------------------ | --------------------------------------------------------------------------------------- |
-| GET    | `/api/cards`       | List all cards                                                                          |
-| GET    | `/api/cards/:id`   | Get one card                                                                            |
-| POST   | `/api/cards`       | Create a card (`front`, `back` required; optional `frontTitle`, `backSubtitle`, `tags`) |
-| PUT    | `/api/cards/:id`   | Update a card                                                                           |
-| DELETE | `/api/cards/:id`   | Delete a card                                                                           |
-| GET    | `/api/quizzes`     | List quiz history                                                                       |
-| GET    | `/api/quizzes/:id` | Get one quiz                                                                            |
-| POST   | `/api/quizzes`     | Save a finished quiz                                                                    |
-| DELETE | `/api/quizzes/:id` | Delete a quiz from history                                                              |
+## Folder READMEs
 
-## More help
-
-Every folder has its own `README.md` with three beginner questions:
-
-1. What is this folder?
-2. What files matter?
-3. What should I change (or not)?
+Each major folder has a short `README.md` (what it is, what to edit, what to avoid).

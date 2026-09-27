@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Buddy — Class</title>
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="site-brand" href="/index.html">Study Buddy</a>
+        <div class="site-header__actions">
+          <div class="add-menu">
+            <button
+              type="button"
+              id="add-menu-button"
+              class="button button--icon"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="add-menu"
+              aria-label="Create"
+              title="Create"
+            >
+              +
+            </button>
+            <div id="add-menu" class="add-menu__panel" hidden role="menu">
+              <button type="button" class="add-menu__item" data-action="new-class" role="menuitem">
+                New Class
+              </button>
+              <button type="button" class="add-menu__item" data-action="new-cardset" role="menuitem">
+                New Cardset
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="open-settings"
+            class="button button--icon button--secondary"
+            title="Settings"
+            aria-label="Settings"
+          >
+            ⚙
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <div class="page-toolbar">
+        <nav class="breadcrumb" id="class-breadcrumb" aria-label="Breadcrumb"></nav>
+
+        <div class="session-menu page-toolbar__menu">
+          <button
+            type="button"
+            id="class-menu-button"
+            class="button button--icon button--secondary"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="class-menu"
+            aria-label="More actions"
+            title="More actions"
+          >
+            ⋯
+          </button>
+          <div id="class-menu" class="add-menu__panel set-menu" hidden role="menu">
+            <button type="button" class="add-menu__item" data-menu="import" role="menuitem">
+              Import cardset
+            </button>
+            <button type="button" class="add-menu__item" data-menu="export" role="menuitem">
+              Export cardset
+            </button>
+            <button type="button" class="add-menu__item add-menu__item--danger" data-menu="delete" role="menuitem">
+              Delete class
+            </button>
+          </div>
+          <input type="file" id="import-cardset" accept="application/json,.json" hidden />
+        </div>
+      </div>
+
+      <div class="page-scroll">
+        <div id="cardsets-grid" class="tile-grid" aria-live="polite"></div>
+
+        <div id="class-empty" class="tile-empty-block" hidden>
+          <p class="tile-empty">No cardsets.</p>
+          <button type="button" id="class-add-cardset" class="button">Add cardset</button>
+        </div>
+
+        <p id="class-status" class="form-status" role="status"></p>
+      </div>
+    </main>
+
+    <dialog id="export-cardset-dialog" class="app-dialog">
+      <form method="dialog" id="export-cardset-form" class="card-form">
+        <h2>Export cardset</h2>
+        <label for="export-cardset-select">Cardset</label>
+        <select id="export-cardset-select" required></select>
+        <p id="export-cardset-status" class="form-status" role="status"></p>
+        <div class="card-form__actions">
+          <button type="submit" value="cancel" class="button button--secondary" formnovalidate>
+            Cancel
+          </button>
+          <button type="submit" value="export" class="button">Export</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/shared.js"></script>
+    <script src="/js/class-page.js"></script>
+  </body>
+</html>
