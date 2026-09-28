@@ -18,3 +18,6 @@ node_modules/
 # Legacy folders (may still exist on older machines)
 /data/cards/*
 /data/quizzes/*
+
+# Local testing
+tests/
